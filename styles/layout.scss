@@ -1,8 +1,39 @@
 body {
-  background-color: #D11E1E;
-  // background-image: url('../ramen.jpg');
+  background-color: #E3B0B0;
+  margin: 20px;
+  padding: 20px;
 
   h1 {
-    color: #244751;
+    color: #000000;
+    font-family: 'Codystar', cursive;
+    font-size: 60px;
+    margin: 0px;
   }
+
+  h2 {
+    font-family: 'Varela Round', sans-serif;
+    margin: 0px;
+    
+  }
+
+  h3 {
+    // font-family: 'Monoton', cursive;
+    // font-family: 'Codystar', cursive;
+    // font-family: 'Monofett', cursive;
+    font-family: 'Varela Round', sans-serif;
+  }
+  
+  #map {
+    height: 400px;
+    width: 100%;
+   }
+
+  //  #map-canvas {
+  //   height: 100%;
+  //   width: 100%;
+  //   margin: 0px;
+  //   padding: 0px
+  // }
+  
 }
+

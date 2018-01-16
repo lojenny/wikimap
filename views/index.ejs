@@ -1,17 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home Page</title>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+    <title>Slurp that Ramen</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
+    <link href="https://fonts.googleapis.com/css?family=Codystar|Monofett|Monoton|Varela+Round" rel="stylesheet">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCXgIOclaPlfHKvME4rZcGpLU36303Yh5g" type="text/javascript"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script> 
+    
+</head> 
+<body>
+  <h1>Slurp that ramen</h1>
+  <h2>Vancouver Ramen Rater</h2>    
+  <h3>My Google Maps Demo</h3>
+  <div id="map"></div>
 
-  <body>
-    <h1>Hello World! hey!</h1>
-  </body>
+<script type="text/javascript">
+var map;
+var infoWindow;
+var service;
+
+
+function initialize() {
+    var mapOptions = {
+        zoom: 12,
+        center: new google.maps.LatLng(49.246292,-123.116226),
+        styles: [{
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{
+                visibility: "off"
+            }]
+        }]
+    };
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    infoWindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+    service.getDetails({
+        placeId: '8afcd68c9a77aa4c00ab92b2958535ddfd1a7f4f'
+    }, function (result, status) {
+        if (status != google.maps.places.PlacesServiceStatus.OK) {
+            alert(status);
+            return;
+        }
+        var marker = new google.maps.Marker({
+            map: map,
+            place: {
+                placeId: "8afcd68c9a77aa4c00ab92b2958535ddfd1a7f4f",
+                location: result.geometry.location
+            }
+        });
+        map.setCenter(marker.getPosition());
+        var address = result.adr_address;
+        var newAddr = address.split("</span>,");
+
+        infoWindow.setContent(result.name + "<br>" + newAddr[0] + "<br>" + newAddr[1] + "<br>" + newAddr[2]);
+        google.maps.event.addListener(infoWindow, 'domready', function () {
+            map.setCenter(marker.getPosition());
+        });
+        infoWindow.open(map, marker);
+
+    });
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+// var map;
+// var service;
+// var infowindow;
+
+// function initialize() {
+//   var pyrmont = new google.maps.LatLng(49.246292,-123.116226);
+
+//   map = new google.maps.Map(document.getElementById('map'), {
+//       center: pyrmont,
+//       zoom: 15
+//     });
+
+//   var request = {
+//     location: pyrmont,
+//     radius: '1000',
+//     query: 'ramen'
+//   };
+
+//   service = new google.maps.places.PlacesService(map);
+//   service.textSearch(request, callback);
+// }
+
+// place_ids = []
+// function callback(results, status) {
+//   if (status == google.maps.places.PlacesServiceStatus.OK) {
+//     for (var i = 0; i < results.length; i++) {
+//       var place = results[i];
+//       console.log(place);
+//       place_ids.push(place.id);
+//     }
+//   }
+//   console.log(place_ids);
+// }
+
+place_ids = ["8afcd68c9a77aa4c00ab92b2958535ddfd1a7f4f", "e8ae60f3bb94f9af3bc86a007247d70629bca9ae", "8276990229f65b846a5912b29bcc15856d789eb2", "ad724f8e759076f8ab26616d2cfaafacdb80891a", "9d8213fb5b796905e4dfb48e5e3175f43410d07b", "4bd5559316186b0d9ab6f2af70364e672bed2c52", "1cdecc1a0f8d9ce85d4994e692f0931c389bf30c", "71455e77e4ec2d1f22c7528a63d9849d40f60d1d", "cb1ff325dee42a4e8346a44dd76c5e1b7c8d3867", "e5635e9263d9c951c0067a395710079960d490ef", "9c96eacbed13f932f6421619af75875525b9fe90", "ea8cda0258b7e0dfa7a310738c6184b83f7c247b", "cf0bb0dbdb73d3ea1a58dda8cede64bd4f0a9fae", "c7044f92230b63dca10c51fc7a967cc2bd0be411", "8a15d67866eef05857654605177caa39086dccf5", "9803e4fa75f7f51b27bd18ad98a568c2e0d07897", "92c986fcd2f59a516e4c03e1875aab5a5e8e4870", "46d85b2f65647762397f64f112dc90a18deedc14", "c9b488682cdd3f9b61eee80aef291b7f97884e03", "c684ed441082d473f6d8467d0bfcf5c8bf809913", "8afcd68c9a77aa4c00ab92b2958535ddfd1a7f4f", "e8ae60f3bb94f9af3bc86a007247d70629bca9ae", "8276990229f65b846a5912b29bcc15856d789eb2", "ad724f8e759076f8ab26616d2cfaafacdb80891a", "9d8213fb5b796905e4dfb48e5e3175f43410d07b", "4bd5559316186b0d9ab6f2af70364e672bed2c52", "1cdecc1a0f8d9ce85d4994e692f0931c389bf30c", "71455e77e4ec2d1f22c7528a63d9849d40f60d1d", "cb1ff325dee42a4e8346a44dd76c5e1b7c8d3867", "9c96eacbed13f932f6421619af75875525b9fe90", "e5635e9263d9c951c0067a395710079960d490ef", "8a15d67866eef05857654605177caa39086dccf5", "ea8cda0258b7e0dfa7a310738c6184b83f7c247b", "c7044f92230b63dca10c51fc7a967cc2bd0be411", "cf0bb0dbdb73d3ea1a58dda8cede64bd4f0a9fae", "9803e4fa75f7f51b27bd18ad98a568c2e0d07897", "92c986fcd2f59a516e4c03e1875aab5a5e8e4870", "46d85b2f65647762397f64f112dc90a18deedc14", "c9b488682cdd3f9b61eee80aef291b7f97884e03", "c684ed441082d473f6d8467d0bfcf5c8bf809913"];
+  </script>
+</body>
 </html>
+
+
